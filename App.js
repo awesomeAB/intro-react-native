@@ -8,7 +8,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, Image} from 'react-native';
-
+// import {Button} from "native-base";
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
     android:
@@ -32,6 +32,8 @@ export default class App extends Component<Props> {
                     <Text style={{fontSize: 15, marginRight: 16, ...styles.saveCancel}}> Save </Text>
                 </View>
 
+
+
                 <View style={{margin:40}}>
                 <TextInput
                         style={styles.groupName}
@@ -46,8 +48,9 @@ export default class App extends Component<Props> {
                     <Text style={{ fontSize: 25, fontWeight: '800', color: '#97979795'}}> Upload</Text>
                     <Text style={{ fontSize: 25, fontWeight: '800', color: '#97979795'}}> Photo</Text>
                 </View>
+
                 <View style={styles.backButton}>
-                    <Image style={styles.btn} source={require('./back.png')} />
+                    <Image style={styles.btn} source={require('./assets/shareIcon.png')} />
                 </View>
 
             </View>
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
     uploadPhoto: {
         height: 250,
         width: 250,
-        borderWidth: 2,
+        borderWidth: 3,
         borderColor: '#97979795',
         borderStyle: 'dashed',
         borderRadius: 125,
