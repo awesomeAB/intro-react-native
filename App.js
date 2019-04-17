@@ -8,7 +8,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, Image} from 'react-native';
-// import {Button} from "native-base";
+import { Item, Input, Container, Button } from 'native-base';
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
     android:
@@ -35,13 +35,9 @@ export default class App extends Component<Props> {
 
 
                 <View style={{margin:40}}>
-                <TextInput
-                        style={styles.groupName}
-                        placeholder={'Group Name'}
-                        placeholderTextColor = {'#FFFFFF'}
-                        onChangeText={(text) => this.setState({text})}
-                        value={this.state.text}
-                />
+                    <Item style={styles.groupName}>
+                        <Input placeholder='Group Name' placeholderTextColor='#ffffff' style={{color: '#ffffff'}} />
+                    </Item>
                 </View>
 
                 <View style={styles.uploadPhoto}>
