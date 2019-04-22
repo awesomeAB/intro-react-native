@@ -1,14 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, Image} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
 import { Item, Input, Container, Button } from 'native-base';
+import ImagePicker from 'react-native-image-picker';
+
+
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
     android:
@@ -20,11 +15,44 @@ type Props = {};
 export default class App extends Component<Props> {
     constructor(props) {
         super(props);
-        this.state = {text: ''};
+        this.state = {
+            text: '',
+            photo: null,
+            isPhoto: false,
+        };
     }
 
+    handleChoosePhoto = () => {
+        const options = {
+
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                // We can directly load the image on the app:
+                const source = {uri:response.uri};
+
+                // Or we can get the image in base64 encoding using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                this.setState({
+                    photo: source, isPhoto:true,
+                });
+            }
+        });
+    };
+
     render() {
+        const { photo } = this.state;
         return (
+
             <View style={styles.container}>
                 <View style={styles.topBar}>
                     <Text style={{fontSize: 15, marginLeft: 16, ...styles.saveCancel}}> Cancel</Text>
@@ -40,10 +68,18 @@ export default class App extends Component<Props> {
                     </Item>
                 </View>
 
+                <TouchableOpacity onPress={() => this.handleChoosePhoto()}>
                 <View style={styles.uploadPhoto}>
-                    <Text style={{ fontSize: 25, fontWeight: '800', color: '#97979795'}}> Upload</Text>
-                    <Text style={{ fontSize: 25, fontWeight: '800', color: '#97979795'}}> Photo</Text>
+                    {photo && (
+                        <Image
+                            source={{ uri: photo.uri }}
+                            style={{ width: 250, height: 250, borderRadius: 125}}
+                        />
+                    )}
+                    {!this.state.isPhoto ? <Text style={{ fontSize: 25, fontWeight: '800', color: '#97979795'}}> Upload</Text> : null}
+                    {!this.state.isPhoto ? <Text style={{ fontSize: 25, fontWeight: '800', color: '#97979795'}}> Photo</Text> : null}
                 </View>
+                </TouchableOpacity>
 
                 <View style={styles.backButton}>
                     <Image style={styles.btn} source={require('./assets/shareIcon.png')} />
